@@ -10,4 +10,5 @@ export interface OrderInterface {
   type?: string;
   period?: string;
   date?: string;
+  ordered_with_all?: string;
 }

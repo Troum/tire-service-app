@@ -42,7 +42,7 @@ onBeforeMount(() => {
             Общая сумма:
           </span>
           <span>&mdash; день: {{ summary.today }} BYN</span>
-          <span>&mdash; текущая неделя: {{ summary.currentWeek }} BYN</span>
+          <span>&mdash; текущая неделя (до вчера): {{ summary.currentWeek }} BYN</span>
           <span>&mdash; предыдущий месяц: {{ summary.lastMonth }} BYN</span>
         </v-col>
         <v-col cols="12">
@@ -98,11 +98,11 @@ onBeforeMount(() => {
                 >
                   <v-sheet class="position-relative user-card" elevation="1">
                     <SeasonComponent :season="item.raw.season"/>
-                    <strong style="top: 32px; left: 16px" class="position-absolute d-flex flex-column text-body-1">
+                    <strong style="top: 16px; left: 16px" class="position-absolute d-flex flex-column text-body-1">
                       <span>{{ item.raw.producer }}</span>
                       <span class="font-weight-medium">{{ item.raw.type }}</span>
                     </strong>
-                    <v-img height="175"
+                    <v-img height="185"
                            class="d-flex flex-column align-baseline justify-end pb-4"
                            :gradient="`${useGradient(item.raw.season)}`">
                       <v-list-item
@@ -113,9 +113,10 @@ onBeforeMount(() => {
                         lines="three"
                       >
                         <template v-slot:title>
-                          <strong class="text-h6">
-                            {{ item.raw.user }}
-                          </strong>
+                          <div class="d-flex flex-column ga-0">
+                            <span class="text-h6">{{ item.raw.user }}</span>
+                            <small class="d-inline-block mt-n2 mb-1">{{ item.raw.ordered_with_all }}</small>
+                          </div>
                         </template>
                         <template v-slot:subtitle>
                           <span class="text-body-1 font-weight-medium">
