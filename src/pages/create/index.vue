@@ -18,14 +18,14 @@ const echo: any = inject('echo')
 onBeforeMount(() => {
 
   http.get('/auth/sizes')
+    .then((response: SizeInterface[]) => {
+      sizes.value = response
+    })
     .then(() => {
       http.get('/auth/places')
         .then((response: PlaceInterface[]) => {
           places.value = response
         })
-    })
-    .then((response: SizeInterface[]) => {
-      sizes.value = response
     })
     .then(() => {
       http.get('/auth/seasons')
