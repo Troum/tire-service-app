@@ -42,7 +42,7 @@ const onSubmit = handleSubmit((values: LoginRequest) => {
     <v-row class="fill-height">
       <v-col cols="11" lg="5" class="d-flex justify-center align-center mx-auto">
         <v-form class="flex-fill" @submit="onSubmit">
-          <v-card variant="tonal">
+          <v-card color="brown-lighten-5">
             <div class="pa-6 d-flex justify-center">
               <v-img :max-width="200" src="@/assets/logos/svg/logo-no-background.svg"></v-img>
             </div>
@@ -76,6 +76,6 @@ const onSubmit = handleSubmit((values: LoginRequest) => {
 </template>
 <style lang="scss" scoped>
 .login-background {
-  background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+  background-image: linear-gradient(60deg, rgba(233, 236, 241, 0.84) 0%, rgba(190, 210, 232, 0.9) 100%);
 }
 </style>

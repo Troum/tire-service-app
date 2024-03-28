@@ -5,6 +5,7 @@ export const useAppStore = defineStore('app', {
     return {
       user: null,
       token: null,
+      theme: null,
       alert: {
         show: false
       }
@@ -30,6 +31,9 @@ export const useAppStore = defineStore('app', {
     },
     getUser: (state: any) => {
       return state.user
+    },
+    getTheme: (state: any) => {
+      return state.theme
     }
   },
   actions: {
@@ -39,6 +43,9 @@ export const useAppStore = defineStore('app', {
     },
     setAlert(alert: any) {
       this.alert = alert
+    },
+    setTheme(theme: string) {
+      this.theme = theme
     }
   }
 })

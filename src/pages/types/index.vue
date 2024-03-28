@@ -91,7 +91,7 @@ onMounted(() => {
                   sm="6"
                   xl="3"
                 >
-                  <v-sheet class="position-relative user-card">
+                  <v-sheet class="position-relative user-card" elevation="1">
                     <SeasonComponent :season="item.raw.season"/>
                     <v-img height="60"
                            class="d-flex flex-column align-baseline justify-end pb-4"
