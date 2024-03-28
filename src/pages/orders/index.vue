@@ -23,7 +23,15 @@ const summary = computed(() => {
 const onClickSeeAll = () => {
   itemsPerPage.value = itemsPerPage.value === 10 ? orders.value.length : useDisplay().mobile.value ? 4 : 10
 }
-
+const deleteOrder = (id: number) => {
+  http.delete(`/auth/orders/${id}`)
+    .then(() => {
+      http.get('/auth/orders?all=true')
+        .then((response: OrderInterface[]) => {
+          orders.value = response
+        })
+    })
+}
 onBeforeMount(() => {
   http.get('/auth/orders?all=true')
     .then((response: OrderInterface[]) => {
@@ -98,6 +106,14 @@ onBeforeMount(() => {
                 >
                   <v-sheet class="position-relative user-card" elevation="1">
                     <SeasonComponent :season="item.raw.season"/>
+                    <v-btn class="position-absolute rounded-circle"
+                            variant="flat"
+                            @click="deleteOrder(item.raw.id)"
+                            color="error"
+                            style="bottom: 10px; right: 12px; z-index: 2; opacity: 1"
+                            size="32">
+                      <v-icon size="24">mdi-delete</v-icon>
+                    </v-btn>
                     <strong style="top: 16px; left: 16px" class="position-absolute d-flex flex-column text-body-1">
                       <span>{{ item.raw.producer }}</span>
                       <span class="font-weight-medium">{{ item.raw.type }}</span>
