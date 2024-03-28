@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {useAbilityTo, isLoggedIn} from '@/composables/ability.js'
-import {computed, inject, onBeforeMount, onMounted, ref} from "vue";
+import {computed, inject, onMounted, ref} from "vue";
 import {useAdminAbilities} from "../config/useAdminAbilities";
 import {useRoute, useRouter} from "vue-router";
 import {useAppStore} from "../stores/app";
@@ -13,26 +13,31 @@ const router = useRouter()
 const menu = ref<any[]>([
   {
     title: 'Создать',
+    icon: 'mdi-pencil',
     route: '/create',
     permissions: ['all']
   },
   {
     title: 'Типы',
+    icon: 'mdi-view-list-outline',
     route: '/types',
     permissions: ['all']
   },
   {
     title: 'Информация',
+    icon: 'mdi-exclamation',
     route: '/infos',
     permissions: ['all']
   },
   {
     title: 'История заказов',
+    icon: 'mdi-history',
     route: '/orders',
     permissions: ['orders.all', 'all']
   },
   {
     title: 'Пользователи',
+    icon: 'mdi-account-group',
     route: '/users',
     permissions: ['all']
   }
@@ -98,6 +103,7 @@ onMounted(() => {
                   <template v-for="(item, index) in menu" :key="index">
                     <template v-if="useAbilityTo(item.permissions)">
                       <v-list-item
+                        :prepend-icon="item.icon"
                         :to="item.route"
                         :value="index"
                       >

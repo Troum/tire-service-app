@@ -27,7 +27,7 @@ onBeforeMount(() => {
       <v-col cols="12" class="d-flex flex-wrap justify-center align-center justify-lg-start align-lg-stretch ga-4 mx-auto my-auto">
         <template v-for="info of infos" :key="info.id">
           <v-card :to="`/infos/${info.id}`"
-                  class="pa-0"
+                  class="py-4 px-2"
                   :style="useDisplay().width.value > 768 ? 'display: grid; grid-template-columns: 80px calc(100% - 80px)' : ''"
                   :min-width="`calc(100% / ${usePerRow()} - 8px)`"
                   :max-width="`calc(100% / ${usePerRow()} - 8px)`">
