@@ -19,7 +19,18 @@ defineProps({
     }
   }
 })
-
+const seasonIcon = (season: string) => {
+  switch (season) {
+    case 'w':
+      return 'mdi-snowflake'
+    case 's':
+      return 'mdi-white-balance-sunny'
+    case 'a':
+      return 'mdi-sun-snowflake'
+    default:
+      return ''
+  }
+}
 const http: any = inject('axios')
 const schema = toTypedSchema(
   yup.object({
@@ -82,7 +93,11 @@ const onSubmit = handleSubmit((values: InfoRequest) => {
                   no-data-text="Данных нет"
                   item-value="id"
                   item-title="type"
-                  :items="types"></v-select>
+                  :items="types">
+          <template v-slot:item="{ props, item }">
+            <v-list-item v-bind="props" :append-icon="seasonIcon(item.raw.season)"></v-list-item>
+          </template>
+        </v-select>
         <v-text-field class="w-100" variant="outlined" density="comfortable"
                       v-model="name"
                       v-bind="nameProps"
