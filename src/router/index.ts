@@ -4,11 +4,9 @@
  * Automatic routes for `./src/pages/*.vue`
  */
 
-// Composables
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 import {useAppStore} from "../stores/app";
-import {useGuardedRoutes} from "../config/useGuardedRoutes";
 
 const baseURL = process.env.BASE_URL
 const routes = [
@@ -24,9 +22,9 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(async (to: any, from: any, next: any): Promise<void> => {
+router.beforeEach((to: any, from: any, next: any)=> {
   const appStore = useAppStore();
-  if (useGuardedRoutes.some(v => v.test(to.path)) && !appStore.authToken) {
+  if (to.path !== '/login' && !appStore.authToken) {
     return next({path: "/login"});
   }
   return next();
