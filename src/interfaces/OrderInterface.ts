@@ -7,5 +7,7 @@ export interface OrderInterface {
   season?: string;
   summary?: number;
   hidden?: boolean;
+  type?: string;
+  period?: string;
   date?: string;
 }

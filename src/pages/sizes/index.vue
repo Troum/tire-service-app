@@ -25,8 +25,8 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <v-container fluid :class="{'fill-height': useDisplay().lgAndUp.value}">
-    <v-row :class="{'fill-height': useDisplay().lgAndUp.value}">
+  <v-container fluid>
+    <v-row>
       <v-col cols="12" class="d-flex flex-wrap justify-center justify-lg-start align-lg-center ga-4 mx-auto my-lg-auto">
         <v-row class="d-flex flex-row ga-4">
           <template v-for="place of places" :key="place.id">

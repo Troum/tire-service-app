@@ -4,6 +4,7 @@ import {onBeforeMount, ref, inject, onMounted} from "vue";
 import {useDialogsStore} from "../../stores/dialogs";
 import {TypeInterface} from "../../interfaces/TypeInterface";
 import {useDisplay} from "vuetify";
+import {useGradient} from "../../config/useGradient";
 
 
 const http: any = inject('axios')
@@ -37,8 +38,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-container fluid :class="{'fill-height': useDisplay().lgAndUp.value}">
-    <v-row :class="{'fill-height': useDisplay().lgAndUp.value}">
+  <v-container fluid>
+    <v-row>
       <template v-if="types.length">
         <v-col cols="12">
           <v-data-iterator
@@ -95,7 +96,7 @@ onMounted(() => {
                     <SeasonComponent :season="item.raw.season"/>
                     <v-img height="60"
                            class="d-flex flex-column align-baseline justify-end pb-4"
-                           :gradient="`to top right, rgba(255, 255, 255, .1), rgba( 125, 87, 278, .15)`">
+                           :gradient="`${useGradient(item.raw.season)}`">
                       <v-btn class="position-absolute rounded-circle pa-0"
                              style="top: 16px; left: 16px; z-index: 2"
                              color="warning"
@@ -104,7 +105,7 @@ onMounted(() => {
                         <v-icon size="sm">mdi-pencil</v-icon>
                       </v-btn>
                       <v-list-item
-                        class="position-absolute text-center px-4 py-4 w-100"
+                        class="position-absolute text-center px-4 py-4 w-75"
                         style="z-index: 1; left: 50%; top: 50%; transform: translate(-50%, -50%)"
                         :width="width"
                         :title="item.raw.type"
@@ -112,9 +113,10 @@ onMounted(() => {
                         lines="three"
                       >
                         <template v-slot:title>
-                          <strong class="text-h5">
-                            {{ item.raw.type }}
-                          </strong>
+                          <div class="text-h5 d-flex justify-space-between">
+                            <span>{{ item.raw.type }}</span>
+                            <span>{{ item.raw.size.size }}</span>
+                          </div>
                         </template>
                       </v-list-item>
                     </v-img>

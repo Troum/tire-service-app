@@ -6,6 +6,7 @@ import {useSeasons} from "../../config/useSeasons";
 import NotFoundCreateComponent from "../../components/forms/NotFoundCreateComponent.vue";
 import {useDialogsStore} from "../../stores/dialogs";
 import {useDisplay} from "vuetify";
+import {useGradient} from "../../config/useGradient";
 
 const http: any = inject('axios')
 const echo: any = inject('echo')
@@ -81,13 +82,25 @@ const infosItems = computed(() => {
                 <div class="d-flex align-center w-100 justify-start ga-4">
                   <v-menu>
                     <template v-slot:activator="{ props }">
-                      <v-btn
-                        variant="tonal"
-                        prepend-icon="mdi-filter"
-                        v-bind="props"
-                      >
-                        Фильтр сезонов
-                      </v-btn>
+                      <template v-if="useDisplay().mobile.value">
+                        <v-btn
+                          size="32"
+                          style="opacity: 1"
+                          variant="flat" icon="mdi-filter"
+                          v-bind="props"
+                        >
+                        </v-btn>
+                      </template>
+                      <template v-else>
+                        <v-btn
+                          variant="tonal"
+                          prepend-icon="mdi-filter"
+                          v-bind="props"
+                        >
+                          Фильтр сезонов
+                        </v-btn>
+                      </template>
+
                     </template>
                     <v-list>
                       <v-list-item
@@ -149,9 +162,9 @@ const infosItems = computed(() => {
                   sm="6"
                   xl="3"
                 >
-                  <v-sheet>
+                  <v-sheet elevation="1">
                     <v-img
-                      :gradient="`to top right, rgba(255, 255, 255, .1), rgba( 125, 125, 125, .15)`"
+                      :gradient="`${useGradient(item.raw.type?.season)}`"
                       :src="item.raw.image ?? item.raw.image_url"
                       height="150"
                     >

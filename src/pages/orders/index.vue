@@ -3,13 +3,22 @@
 import {onBeforeMount, ref, inject, computed} from "vue";
 import {useDisplay} from "vuetify";
 import { OrderInterface } from "../../interfaces/OrderInterface";
+import {useGradient} from "../../config/useGradient";
 
 const http: any = inject('axios')
 const orders = ref<any[]>([])
 const itemsPerPage = ref<number>(useDisplay().mobile.value ? 4 : 10)
 
 const summary = computed(() => {
-  return orders.value.reduce((acc: any, curr: OrderInterface) => acc + curr.summary, 0)
+  const lm = orders.value.filter((item: OrderInterface) => item.period === 'lm')
+  const cw = orders.value.filter((item: OrderInterface) => item.period === 'cw')
+  const cd = orders.value.filter((item: OrderInterface) => item.period === 'cd')
+
+  return {
+    lastMonth: lm.reduce((acc: any, curr: OrderInterface) => acc + curr.summary, 0),
+    currentWeek: cw.reduce((acc: any, curr: OrderInterface) => acc + curr.summary, 0),
+    today: cd.reduce((acc: any, curr: OrderInterface) => acc + curr.summary, 0),
+  }
 })
 const onClickSeeAll = () => {
   itemsPerPage.value = itemsPerPage.value === 10 ? orders.value.length : useDisplay().mobile.value ? 4 : 10
@@ -25,14 +34,16 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <v-container fluid :class="{'fill-height': useDisplay().lgAndUp.value}">
-    <v-row :class="{'fill-height': useDisplay().lgAndUp.value}">
+  <v-container fluid>
+    <v-row>
       <template v-if="orders.length">
-        <v-col cols="12">
+        <v-col cols="12" class="d-flex flex-column ga-1">
           <span class="text-body-1 font-weight-bold">
             Общая сумма:
           </span>
-          <span>{{ summary }} BYN</span>
+          <span>&mdash; день: {{ summary.today }} BYN</span>
+          <span>&mdash; текущая неделя: {{ summary.currentWeek }} BYN</span>
+          <span>&mdash; предыдущий месяц: {{ summary.lastMonth }} BYN</span>
         </v-col>
         <v-col cols="12">
           <v-data-iterator
@@ -85,14 +96,15 @@ onBeforeMount(() => {
                   sm="6"
                   xl="3"
                 >
-                  <v-sheet class="position-relative user-card">
+                  <v-sheet class="position-relative user-card" elevation="1">
                     <SeasonComponent :season="item.raw.season"/>
-                    <strong style="top: 32px; left: 16px" class="position-absolute text-body-1">
-                      {{ item.raw.producer }}
+                    <strong style="top: 32px; left: 16px" class="position-absolute d-flex flex-column text-body-1">
+                      <span>{{ item.raw.producer }}</span>
+                      <span class="font-weight-medium">{{ item.raw.type }}</span>
                     </strong>
                     <v-img height="175"
                            class="d-flex flex-column align-baseline justify-end pb-4"
-                           :gradient="`to top right, rgba(255, 255, 255, .1), rgba( 125, 87, 278, .15)`">
+                           :gradient="`${useGradient(item.raw.season)}`">
                       <v-list-item
                         class="position-absolute px-4 py-4 w-100"
                         style="left: 0; bottom: 0"
