@@ -42,16 +42,19 @@ onBeforeMount(() => {
         </v-row>
       </v-col>
       <template v-if="sizes.length">
-        <v-col cols="12" class="d-flex flex-wrap justify-center justify-lg-start align-lg-center ga-4 mx-auto my-lg-auto">
-          <template v-for="size of sizes" :key="size.id">
-            <v-card :to="`/sizes/${size.id}?size=${parseInt(size.size)}`"
-                    height="240" :min-width="`calc(100% / ${usePerRow()} - 8px)`"
-                    :max-width="`calc(100% / ${usePerRow()} - 8px)`">
-              <v-card-text class="d-flex justify-center align-center fill-height">
-                <span class="text-h3">{{ size.size }}</span>
-              </v-card-text>
-            </v-card>
-          </template>
+        <v-col cols="12" class="d-flex flex-wrap justify-center justify-lg-start align-lg-center mx-auto my-lg-auto">
+          <v-row class="ma-0 pa-0">
+            <template v-for="size of sizes" :key="size.id">
+              <v-col cols="12" md="6" lg="3">
+                <v-card :to="`/sizes/${size.id}?size=${parseInt(size.size)}`"
+                        height="240">
+                  <v-card-text class="d-flex justify-center align-center fill-height">
+                    <span class="text-h3">{{ size.size }}</span>
+                  </v-card-text>
+                </v-card>
+              </v-col>
+            </template>
+          </v-row>
         </v-col>
       </template>
       <template v-else>
