@@ -96,7 +96,7 @@ onMounted(() => {
                   md="4"
                   xl="3"
                 >
-                  <v-sheet class="position-relative">
+                  <v-sheet class="position-relative" elevation="1">
                     <v-img height="175"
                            class="d-flex flex-column align-baseline justify-end pb-4"
                            :gradient="`to top right, rgba(255, 255, 255, .1), rgba( 125, 87, 278, .15)`">
