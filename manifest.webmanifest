@@ -1,1 +1,41 @@
-{"theme_color":"white","name":"Tires Service","short_name":"TSA","start_url":"/","display":"standalone","background_color":"#ffffff","lang":"en","scope":"/"}
+{
+  "name": "Tires Service",
+  "short_name": "TS",
+  "description": "Description of your app",
+  "icons": [
+  {
+        "src": "/img/icons/pwa-64x64.png",
+        "sizes": "64x64",
+        "type": "image/png",
+        "purpose": "any maskable"
+      },
+      {
+            "src": "/img/icons/pwa-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+          },
+          {
+                "src": "/img/icons/pwa-512x512.png",
+                "sizes": "512x512",
+                "type": "image/png",
+                "purpose": "any maskable"
+              },
+    {
+      "src": "/img/icons/apple-touch-icon-180x180.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/icons/maskable-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4DBA87"
+}
