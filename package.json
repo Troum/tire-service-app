@@ -2,10 +2,10 @@
   "name": "tires-app",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview",
-    "lint": "eslint . --fix --ignore-path .gitignore"
+    "lint": "eslint . --fix --ignore-path .gitignore",
+    "dev": "vite",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@mdi/font": "6.2.95",
@@ -17,6 +17,7 @@
     "lodash": "^4.17.21",
     "pinia-plugin-persistedstate": "^3.2.1",
     "pusher-js": "^8.4.0-rc2",
+    "register-service-worker": "^1.7.2",
     "roboto-fontface": "*",
     "vee-validate": "^4.12.6",
     "vue": "^3.4.21",
@@ -27,6 +28,7 @@
     "@babel/types": "^7.24.0",
     "@types/node": "^20.11.25",
     "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/cli-plugin-pwa": "~5.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "eslint": "^8.57.0",
     "eslint-config-standard": "^17.1.0",
