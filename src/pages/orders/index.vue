@@ -6,7 +6,7 @@ import { OrderInterface } from "../../interfaces/OrderInterface";
 import {useGradient} from "../../config/useGradient";
 
 const http: any = inject('axios')
-const orders = ref<any[]>([])
+const orders = ref<OrderInterface[]>([])
 const itemsPerPage = ref<number>(useDisplay().mobile.value ? 4 : 10)
 
 const summary = computed(() => {
@@ -113,6 +113,15 @@ onBeforeMount(() => {
                             style="bottom: 10px; right: 12px; z-index: 2; opacity: 1"
                             size="32">
                       <v-icon size="24">mdi-delete</v-icon>
+                    </v-btn>
+                    <v-btn class="position-absolute rounded-circle"
+                           variant="flat"
+                           :href="item.raw.url"
+                           target="_blank"
+                           color="error"
+                           style="bottom: 10px; right: 52px; z-index: 2; opacity: 1"
+                           size="32">
+                      <v-icon size="24">mdi-open-in-new</v-icon>
                     </v-btn>
                     <strong style="top: 16px; left: 16px" class="position-absolute d-flex flex-column text-body-1">
                       <span>{{ item.raw.producer }}</span>

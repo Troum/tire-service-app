@@ -11,4 +11,5 @@ export interface OrderInterface {
   period?: string;
   date?: string;
   ordered_with_all?: string;
+  url?: string;
 }
