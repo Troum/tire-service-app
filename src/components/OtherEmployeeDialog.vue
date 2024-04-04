@@ -2,9 +2,10 @@
 import { storeToRefs } from 'pinia'
 import {computed, inject, ref, watch, defineEmits} from "vue";
 import {useDialogsStore} from "../stores/dialogs";
+import {useDisplay} from "vuetify";
 
 const emits = defineEmits(['update:employee'])
-
+const { mobile } = useDisplay()
 const http: any = inject('axios')
 const dialogsStore = useDialogsStore()
 const { getDialog } = storeToRefs(dialogsStore)
@@ -39,7 +40,7 @@ watch(dialog, () => {
 </script>
 
 <template>
-<v-dialog min-width="35%" v-model="dialog.show" @update:model-value="closeDialog">
+<v-dialog min-width="35%" :max-width="mobile ? '90%' : '35%'" v-model="dialog.show" @update:model-value="closeDialog">
   <v-card>
     <v-card-title class="d-flex justify-space-between align-center">
       <span>Выберите сотрудника</span>
