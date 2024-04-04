@@ -21,7 +21,7 @@ const summary = computed(() => {
   }
 })
 const onClickSeeAll = () => {
-  itemsPerPage.value = itemsPerPage.value === 10 ? orders.value.length : useDisplay().mobile.value ? 4 : 10
+  itemsPerPage.value = itemsPerPage.value === 12 ? orders.value.length : useDisplay().mobile.value ? 4 : 12
 }
 const deleteOrder = (id: number) => {
   http.delete(`/auth/orders/${id}`)
@@ -162,7 +162,7 @@ onBeforeMount(() => {
         <v-col cols="12" style="top: 50%; left: 50%; transform: translate(-50%, -50%)"
                class="position-absolute d-flex flex-column justify-center align-center align-lg-center mx-auto my-lg-auto">
           <span>В системе нет заказов.</span>
-          <RouterLink to="/create">Создать</RouterLink>
+          <RouterLink to="/sizes">Создать</RouterLink>
         </v-col>
       </template>
     </v-row>
