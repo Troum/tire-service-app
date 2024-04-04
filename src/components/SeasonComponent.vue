@@ -18,7 +18,7 @@ defineProps({
   </template>
   <template v-if="season.includes('s')">
     <v-icon class="position-absolute"
-            color="warning"
+            color="#FFCC33"
             style="top: 10px; right: 12px; z-index: 2"
             size="32">mdi-white-balance-sunny</v-icon>
   </template>
