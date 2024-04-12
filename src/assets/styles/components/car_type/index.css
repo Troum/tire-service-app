@@ -1,0 +1,155 @@
+.icon {
+    background-image: url('~@/assets/images/car_types_sprite_sheet.png');
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.icon-micro {
+    width: 76px;
+    height: 32px;
+    background-position: -25px -32px;
+}
+
+.icon-hatchback {
+    width: 81px;
+    height: 30px;
+    background-position: -137px -35px;
+}
+
+.icon-vagon {
+    width: 92px;
+    height: 29px;
+    background-position: -250px -36px;
+}
+
+.icon-liftback {
+    width: 84px;
+    height: 26px;
+    background-position: -361px -39px;
+}
+
+.icon-sedan {
+    width: 93px;
+    height: 26px;
+    background-position: -463px -37px;
+}
+
+.icon-coupe {
+    width: 86px;
+    height: 27px;
+    background-position: -21px -110px;
+}
+
+.icon-limousine {
+    width: 105px;
+    height: 28px;
+    background-position: -125px -109px;
+}
+
+.icon-muscle-car {
+    width: 94px;
+    height: 27px;
+    background-position: -249px -110px;
+}
+
+.icon-cabriolet {
+    width: 94px;
+    height: 26px;
+    background-position: -356px -111px;
+}
+
+.icon-roadster {
+    width: 82px;
+    height: 25px;
+    background-position: -468px -112px;
+}
+
+.icon-targa {
+    width: 85px;
+    height: 28px;
+    background-position: -21px -186px;
+}
+
+.icon-sport-car {
+    width: 85px;
+    height: 26px;
+    background-position: -135px -188px;
+}
+
+.icon-super-car {
+    width: 87px;
+    height: 24px;
+    background-position: -252px -191px;
+}
+
+.icon-suv {
+    width: 72px;
+    height: 32px;
+    background-position: -367px -182px;
+}
+
+.icon-crossover {
+    width: 71px;
+    height: 29px;
+    background-position: -474px -185px;
+}
+
+.icon-pickup {
+    width: 83px;
+    height: 28px;
+    background-position: -21px -266px;
+}
+
+.icon-cargo-van {
+    width: 81px;
+    height: 36px;
+    background-position: -137px -258px;
+}
+
+.icon-van {
+    width: 85px;
+    height: 35px;
+    background-position: -253px -259px;
+}
+
+.icon-minivan {
+    width: 90px;
+    height: 35px;
+    background-position: -357px -259px;
+}
+
+.icon-minibus {
+    width: 77px;
+    height: 37px;
+    background-position: -471px -257px;
+}
+
+.icon-campervan {
+    width: 81px;
+    height: 45px;
+    background-position: -23px -337px;
+}
+
+.icon-bus {
+    width: 115px;
+    height: 42px;
+    background-position: -120px -340px;
+}
+
+.icon-mini-truck {
+    width: 84px;
+    height: 44px;
+    background-position: -254px -338px;
+}
+
+.icon-truck {
+    width: 84px;
+    height: 45px;
+    background-position: -361px -339px;
+}
+
+.icon-tractor-truck {
+    width: 68px;
+    height: 46px;
+    background-position: -475px -338px;
+}
