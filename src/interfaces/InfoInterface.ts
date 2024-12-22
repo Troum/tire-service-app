@@ -8,5 +8,6 @@ export interface InfoInterface {
   price?: number;
   image?: string;
   image_url?: string;
+  qr_code_image?: string;
   type?: TypeInterface;
 }

@@ -13,6 +13,7 @@ declare module 'vue' {
     AddTypeForm: typeof import('./components/forms/AddTypeForm.vue')['default']
     AddUserForm: typeof import('./components/forms/AddUserForm.vue')['default']
     AlertComponent: typeof import('./components/AlertComponent.vue')['default']
+    CarTypeComponent: typeof import('./components/commons/CarTypeComponent.vue')['default']
     EditInfoDialog: typeof import('./components/EditInfoDialog.vue')['default']
     EditTypeDialog: typeof import('./components/EditTypeDialog.vue')['default']
     EditUserDialog: typeof import('./components/EditUserDialog.vue')['default']
