@@ -122,7 +122,7 @@ watch(info, (value) => {
             <v-card-subtitle class="d-flex align-center justify-space-between px-0">
               <div>
                 <span class="text-body-1 font-weight-bold">QR Code:&nbsp;</span>
-                <v-img :width="150" :height="150" :src="info?.qr_code_image"></v-img>
+                <div v-html="info?.qr_code_image"></div>
               </div>
             </v-card-subtitle>
             <SeasonComponent :season="info.type?.season"/>
