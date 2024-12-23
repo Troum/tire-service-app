@@ -120,7 +120,7 @@ watch(info, (value) => {
               <v-chip :color="useGetColor(info.amount)" variant="elevated">{{ info.amount }}</v-chip>
             </v-card-subtitle>
             <v-card-subtitle class="d-flex align-center justify-space-between px-0">
-              <div>
+              <div class="my-2">
                 <span class="text-body-1 font-weight-bold">QR Code:&nbsp;</span>
                 <div v-html="info?.qr_code_image"></div>
               </div>
