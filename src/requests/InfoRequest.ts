@@ -4,5 +4,5 @@ export interface InfoRequest {
   amount?: number;
   price?: number;
   image?: number;
-  qr_code_hash?: string;
+  codes?: string;
 }

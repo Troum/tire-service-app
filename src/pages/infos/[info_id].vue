@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import _ from "lodash"
-import {onBeforeMount, ref, inject, onBeforeUnmount, watch} from "vue";
+import {inject, onBeforeMount, onBeforeUnmount, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import {InfoInterface} from "../../interfaces/InfoInterface";
 import {useGetColor} from "../../composables/useGetColor";
@@ -102,34 +102,46 @@ watch(info, (value) => {
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="12" lg="4">
+      <v-col cols="12" lg="6">
         <v-card class="pa-0 d-flex">
-          <template v-if="useDisplay().width.value > 768">
-            <v-img max-height="320" :src="info.image ?? info.image_url"></v-img>
-          </template>
           <v-card-text class="position-relative pa-4">
-            <template v-if="useDisplay().width.value < 768">
-              <v-img max-height="320" :src="info.image ?? info.image_url"></v-img>
-            </template>
-            <v-card-title class="text-wrap px-0">{{ info.name }}</v-card-title>
-            <v-card-subtitle class="d-flex align-center justify-space-between px-0">
-              <div>
-                <span class="text-body-1 font-weight-bold">Цена:&nbsp;</span>
-                <span>{{ info.price }} BYN</span>
-              </div>
-              <v-chip :color="useGetColor(info.amount)" variant="elevated">{{ info.amount }}</v-chip>
-            </v-card-subtitle>
-            <v-card-subtitle class="d-flex align-center justify-space-between px-0">
-              <div class="my-3">
-                <span class="text-body-1 font-weight-bold">QR Code:&nbsp;</span>
-                <div v-html="info?.qr_code_image"></div>
-              </div>
-            </v-card-subtitle>
-            <SeasonComponent :season="info.type?.season"/>
+            <v-row>
+              <v-col cols="3">
+                <template v-if="useDisplay().width.value > 768">
+                  <v-img max-height="320" :src="info.image ?? info.image_url"></v-img>
+                </template>
+                <template v-if="useDisplay().width.value < 768">
+                  <v-img max-height="320" :src="info.image ?? info.image_url"></v-img>
+                </template>
+              </v-col>
+              <v-col cols="9">
+                <v-card-title class="text-wrap px-0">{{ info.name }}</v-card-title>
+                <v-card-subtitle class="d-flex align-center justify-space-between px-0">
+                  <div>
+                    <span class="text-body-1 font-weight-bold">Цена:&nbsp;</span>
+                    <span>{{ info.price }} BYN</span>
+                  </div>
+                  <v-chip :color="useGetColor(info.amount)" variant="elevated">{{ info.amount }}</v-chip>
+                </v-card-subtitle>
+                <v-card-subtitle class="d-flex align-center justify-space-between px-0">
+                  <div class="my-3">
+                    <span class="text-body-1 font-weight-bold">QR(s):&nbsp;</span>
+                    <template v-if="info?.qr_code_images">
+                      <div class="d-flex justify-start flex-wrap ga-4 mt-4">
+                        <template v-for="(svg, index) of info?.qr_code_images" :key="index">
+                          <div v-html="svg"></div>
+                        </template>
+                      </div>
+                    </template>
+                  </div>
+                </v-card-subtitle>
+                <SeasonComponent :season="info.type?.season"/>
+              </v-col>
+            </v-row>
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" lg="8">
+      <v-col cols="12" lg="6">
         <v-form @submit="onSubmit">
           <v-card variant="flat" color="transparent" class="pa-0">
             <v-card-text>
