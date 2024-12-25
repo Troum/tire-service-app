@@ -40,7 +40,7 @@ const schema = toTypedSchema(
     amount: yup.number().typeError('Поле должно содержать число').required('Поле является обязательным'),
     price: yup.number().typeError('Поле должно быть ценой').required('Поле является обязательным'),
     image_url: yup.string().default('https://cdn-icons-png.freepik.com/256/13507/13507737.png'),
-    qr_code_hash: yup.string().default(''),
+    codes: yup.string().default(''),
   })
 )
 const {defineField, handleSubmit, resetForm} = useForm({
@@ -58,7 +58,7 @@ const [type_id, typeIdProps] = defineField('type_id', vuetifyConfig);
 const [place_id, placeIdProps] = defineField('place_id', vuetifyConfig);
 const [name, nameProps] = defineField('name', vuetifyConfig);
 const [image_url, imageUrlProps] = defineField('image_url', vuetifyConfig);
-const [qr_code_hash, qrCodeHashProps] = defineField('qr_code_hash', vuetifyConfig);
+const [codes, codesProps] = defineField('codes', vuetifyConfig);
 const [amount, amountProps] = defineField('amount', vuetifyConfig);
 const [price, priceProps] = defineField('price', vuetifyConfig);
 
@@ -117,8 +117,8 @@ const onSubmit = handleSubmit((values: InfoRequest) => {
                       label="Ссылка на изображение"
                       placeholder="Вставьте ссылку"></v-text-field>
         <v-text-field class="w-100" variant="outlined" density="comfortable"
-                      v-model="qr_code_hash"
-                      v-bind="qrCodeHashProps"
+                      v-model="codes"
+                      v-bind="codesProps"
                       label="Хэш-ключи для идентификации шин (вводите через запятую в соответствии с количеством)"
                       placeholder="Вставьте хэш-ключ"></v-text-field>
       </v-card-text>
