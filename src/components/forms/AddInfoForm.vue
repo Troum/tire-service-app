@@ -119,7 +119,7 @@ const onSubmit = handleSubmit((values: InfoRequest) => {
         <v-text-field class="w-100" variant="outlined" density="comfortable"
                       v-model="qr_code_hash"
                       v-bind="qrCodeHashProps"
-                      label="Хэш-ключ для идентификации"
+                      label="Хэш-ключи для идентификации шин (вводите через запятую в соответствии с количеством)"
                       placeholder="Вставьте хэш-ключ"></v-text-field>
       </v-card-text>
       <v-card-actions class="d-flex justify-end">
