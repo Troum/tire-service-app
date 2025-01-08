@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-
+// @ts-ignore
 export const useAppStore = defineStore('app', {
   state: () => {
     return {

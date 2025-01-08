@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import _ from "lodash"
-import {inject, onBeforeMount, onBeforeUnmount, ref, watch} from "vue";
+import {computed, inject, onBeforeMount, onBeforeUnmount, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import {InfoInterface} from "../../interfaces/InfoInterface";
 import {useGetColor} from "../../composables/useGetColor";
@@ -11,6 +11,7 @@ import {useForm} from "vee-validate";
 import {OrderRequest} from "../../requests/OrderRequest";
 import {useDisplay} from "vuetify";
 import {useDialogsStore} from "../../stores/dialogs";
+import {useAppStore} from "../../stores/app";
 
 const route = useRoute()
 
@@ -41,26 +42,38 @@ const vuetifyConfig = (state) => ({
     'error-messages': state.errors,
   },
 })
-
+const selectedForScan = ref<string[]>([])
 const [amount, amountProps] = defineField('amount', vuetifyConfig);
 
 const onSubmit = handleSubmit((values: OrderRequest) => {
-  loading.value = true
 
-  values.info_id = info.value.id
-  values.amount = amount.value
+  if (selected.value.length !== amount.value) {
+    useAppStore().setAlert({
+      show: true,
+      message: 'Количество выбранных к сканированию шин не может быть меньше количества в заказе',
+      type: 'warning'
+    })
 
-  if (!_.isNull(employeeId.value)) {
-    values.employee_id = employeeId.value
+  } else {
+    loading.value = true
+    values.selected = selected.value
+
+    values.info_id = info.value.id
+    values.amount = amount.value
+
+    if (!_.isNull(employeeId.value)) {
+      values.employee_id = employeeId.value
+    }
+
+    http.post('/auth/orders', values)
+        .then(() => {
+          resetForm({values: {amount: 0}})
+          loading.value = false
+          employeeId.value = null
+        })
+        .catch(() => loading.value = false)
   }
 
-  http.post('/auth/orders', values)
-    .then(() => {
-      resetForm({values: {amount: 0}})
-      loading.value = false
-      employeeId.value = null
-    })
-    .catch(() => loading.value = false)
 });
 
 const openDialog = () => {
@@ -79,6 +92,15 @@ const loadInfo = () => {
     })
 }
 
+const selectQrCode = (toggle: any, qrId: string) => {
+  toggle()
+  selectedForScan.value.push(qrId)
+}
+
+const selected = computed((): string[] => {
+  return Array.from(selectedForScan.value)
+})
+
 onBeforeMount(() => {
   loadInfo()
 })
@@ -90,8 +112,7 @@ onBeforeUnmount(() => {
 watch(info, (value) => {
   if (value) {
     echo.channel(`info.${value.id}.update`)
-      .listen(`.updated.info`, (data: InfoInterface) => {
-        info.value = data
+      .listen(`.updated.info`, () => {
         loadInfo()
       })
   }
@@ -122,18 +143,6 @@ watch(info, (value) => {
                     <span>{{ info.price }} BYN</span>
                   </div>
                   <v-chip :color="useGetColor(info.amount)" variant="elevated">{{ info.amount }}</v-chip>
-                </v-card-subtitle>
-                <v-card-subtitle class="d-flex align-center justify-space-between px-0">
-                  <div class="my-3">
-                    <span class="text-body-1 font-weight-bold">QR(s):&nbsp;</span>
-                    <template v-if="info?.qr_code_images">
-                      <div class="d-flex justify-start flex-wrap ga-4 mt-4">
-                        <template v-for="(svg, index) of info?.qr_code_images" :key="index">
-                          <div v-html="svg"></div>
-                        </template>
-                      </div>
-                    </template>
-                  </div>
                 </v-card-subtitle>
                 <SeasonComponent :season="info.type?.season"/>
               </v-col>
@@ -179,6 +188,33 @@ watch(info, (value) => {
         </v-form>
       </v-col>
     </v-row>
+    <template v-if="info?.qr_code_images">
+      <v-col>
+        <v-row>
+          <v-col cols="12">
+            <span class="text-body-1 font-weight-bold">QR(s):&nbsp;</span>
+          </v-col>
+          <v-col cols="12">
+            <v-item-group selected-class="bg-light-green-accent-1"
+                          :multiple="true">
+              <v-row class="d-flex align-center flex-wrap">
+                <template v-for="(item, index) of info?.qr_code_images" :key="index">
+                  <v-col cols="12" lg="2" xl="3">
+                    <v-item v-slot="{ selectedClass, toggle }">
+                      <v-card @click="selectQrCode(toggle, item.id)" :class="selectedClass">
+                        <v-card-text class="d-flex justify-center align-center fill-height">
+                          <div v-html="item.code"></div>
+                        </v-card-text>
+                      </v-card>
+                    </v-item>
+                  </v-col>
+                </template>
+              </v-row>
+            </v-item-group>
+          </v-col>
+        </v-row>
+      </v-col>
+    </template>
     <OtherEmployeeDialog @update:employee="closeAfterChoose"/>
   </v-container>
 </template>
