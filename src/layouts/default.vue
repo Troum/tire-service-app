@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {useAbilityTo, isLoggedIn} from '@/composables/ability.js'
+import {useAbilityTo, isLoggedIn} from '../composables/ability.js'
 import {computed, inject, onMounted, ref} from "vue";
 import {useAdminAbilities} from "../config/useAdminAbilities";
 import {useRoute, useRouter} from "vue-router";
@@ -39,6 +39,12 @@ const menu = ref<any[]>([
     title: 'Пользователи',
     icon: 'mdi-account-group',
     route: '/users',
+    permissions: ['all']
+  },
+  {
+    title: 'Работа с DataMatrix',
+    icon: 'mdi-qrcode',
+    route: '/datamatrix',
     permissions: ['all']
   }
 ])

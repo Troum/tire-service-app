@@ -3,7 +3,7 @@ import {toTypedSchema} from "@vee-validate/yup";
 import * as yup from "yup"
 import {useForm} from "vee-validate";
 import {LoginRequest} from "../requests/LoginRequest";
-import {LoginResponse} from "../interfaces/LoginResponse";
+import {LoginResponse} from "../interfaces/responses/LoginResponse";
 import {inject} from "vue";
 import {useAppStore} from "../stores/app";
 import {useRouter} from "vue-router";
