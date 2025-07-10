@@ -61,7 +61,7 @@ const getData = () => {
         setTimeout(() => {
           isLoading.value = false
           dataMatrices.value = response
-        }, 1500)
+        }, 3000)
       })
 }
 const deleteItem = (id: number) => {
@@ -101,7 +101,7 @@ onBeforeMount(() => {
                           density="comfortable"></v-textarea>
             </v-card-text>
             <v-card-actions class="d-flex justify-center px-4 pb-6">
-              <v-btn type="submit" block variant="tonal" density="default">Создать архив изображений</v-btn>
+              <v-btn type="submit" block color="primary" density="default">Создать архив изображений</v-btn>
             </v-card-actions>
           </v-card>
         </v-form>
