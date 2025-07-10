@@ -18,6 +18,9 @@ const headers = [
   },
   {
     title: "Скачать", value: "url", align: "start", sortable: false
+  },
+  {
+    title: "Действия", value: "actions", align: "start", sortable: false
   }
 ]
 
@@ -29,35 +32,46 @@ const schema = toTypedSchema(
       codes: yup.string().required('Поле является обязательным')
     })
 )
-const {defineField, handleSubmit} = useForm({
+const {defineField, handleSubmit, resetField} = useForm({
   validationSchema: schema
 })
-const vuetifyConfig = (state) => ({
+const vuetifyConfig = (state: any) => ({
   props: {
     'error-messages': state.errors,
   },
 })
 const [tireName, tireNameProps] = defineField('tireName', vuetifyConfig);
 const [codes, codesProps] = defineField('codes', vuetifyConfig);
-
+const isLoading = ref(false)
 const onSubmit = handleSubmit((values: DatamatrixRequest) => {
 
   http.post('/auth/datamatrix', values).then((response: DatamatrixResponse) => {
+    resetField('tireName')
+    resetField('codes')
     echo.channel(`datamatrix.${response.id}`)
-        .listen('.datamatrix.created', (data: any[]) => {
-
-          http.get('/auth/datamatrix')
-              .then((response: DatamatrixInterface[]) => {
-                dataMatrices.value = response
-              })
+        .listen('.datamatrix.created', () => {
+          getData()
         })
   })
 });
-onBeforeMount(() => {
+const getData = () => {
+  isLoading.value = true
   http.get('/auth/datamatrix')
+      .then((response: DatamatrixInterface[]) => {
+        setTimeout(() => {
+          isLoading.value = false
+          dataMatrices.value = response
+        }, 1500)
+      })
+}
+const deleteItem = (id: number) => {
+  http.delete(`/auth/datamatrix/${id}`)
       .then((response: DatamatrixInterface[]) => {
         dataMatrices.value = response
       })
+}
+onBeforeMount(() => {
+  getData()
 })
 </script>
 
@@ -92,20 +106,29 @@ onBeforeMount(() => {
           </v-card>
         </v-form>
       </v-col>
-      <v-col cols="12" lg="6">
-        <template v-if="dataMatrices.length > 0">
-        <v-card>
+      <v-col cols="12" lg="6" class="d-flex justify-center align-start">
+        <v-card class="flex-fill">
+          <v-card-title class="d-flex justify-end align-center">
+            <v-btn color="success" size="small" @click="getData">Обновить данные <v-icon icon="mdi-update"></v-icon></v-btn>
+          </v-card-title>
           <v-card-text>
-
-              <v-data-table :headers="headers" :items="dataMatrices" item-key="name">
-                <template #item.url="{ item }">
-                  <v-btn _target="blank" color="primary" :href="item.url">Скачать архив</v-btn>
-                </template>
-              </v-data-table>
-
+            <v-data-table
+                :loading="isLoading"
+                loading-text="Загружаем данные"
+                :headers="headers"
+                :items="dataMatrices"
+                no-data-text="Данных пока нет"
+                items-per-page-text="На странице"
+                item-key="name">
+              <template #item.url="{ item }">
+                <v-btn _target="blank" color="primary" size="small" :href="item.url">Скачать архив</v-btn>
+              </template>
+              <template #item.actions="{ item }">
+                <v-btn size="32" icon="mdi-delete" _target="blank" color="error" @click="deleteItem(item.id)"></v-btn>
+              </template>
+            </v-data-table>
           </v-card-text>
         </v-card>
-        </template>
       </v-col>
     </v-row>
   </v-container>
