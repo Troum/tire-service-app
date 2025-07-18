@@ -28,8 +28,16 @@ const http: any = inject('axios')
 const echo: any = inject('echo')
 const schema = toTypedSchema(
     yup.object({
-      tireName: yup.string().required('Поле является обязательным'),
-      codes: yup.string().required('Поле является обязательным')
+      tireName: yup
+          .string()
+          .required('Поле является обязательным'),
+      tireCode: yup
+          .string()
+          .required('Поле является обязательным')
+          .max(8, 'Код не может превышать ${max} символов'),
+      codes: yup
+          .string()
+          .required('Поле является обязательным')
     })
 )
 const {defineField, handleSubmit, resetField} = useForm({
@@ -41,12 +49,14 @@ const vuetifyConfig = (state: any) => ({
   },
 })
 const [tireName, tireNameProps] = defineField('tireName', vuetifyConfig);
+const [tireCode, tireCodeProps] = defineField('tireCode', vuetifyConfig);
 const [codes, codesProps] = defineField('codes', vuetifyConfig);
 const isLoading = ref(false)
 const onSubmit = handleSubmit((values: DatamatrixRequest) => {
 
   http.post('/auth/datamatrix', values).then((response: DatamatrixResponse) => {
     resetField('tireName')
+    resetField('tireCode')
     resetField('codes')
     echo.channel(`datamatrix.${response.id}`)
         .listen('.datamatrix.created', () => {
@@ -88,6 +98,15 @@ onBeforeMount(() => {
                             clearable
                             label="Введите название шины"
                             placeholder="Название"
+                            variant="outlined"
+                            class="mb-4"
+                            density="comfortable"></v-text-field>
+              <v-text-field type="email"
+                            v-model="tireCode"
+                            v-bind="tireCodeProps"
+                            clearable
+                            label="Введите код шины"
+                            placeholder="Код"
                             variant="outlined"
                             class="mb-4"
                             density="comfortable"></v-text-field>
