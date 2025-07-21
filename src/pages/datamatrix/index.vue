@@ -33,8 +33,7 @@ const schema = toTypedSchema(
           .required('Поле является обязательным'),
       tireCode: yup
           .string()
-          .required('Поле является обязательным')
-          .max(8, 'Код не может превышать ${max} символов'),
+          .max(20, 'Код не может превышать ${max} символов'),
       codes: yup
           .string()
           .required('Поле является обязательным')
